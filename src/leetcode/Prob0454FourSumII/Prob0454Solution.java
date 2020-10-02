@@ -19,7 +19,6 @@ public class Prob0454Solution {
 
         for (Integer sumAB : keySetAB) {
             int countAB = mapAB.get(sumAB);
-            res = res + countAB * mapCD.getOrDefault(-sumAB, 0);
         }
         return res;
     }
