@@ -21,11 +21,12 @@ public class Prob0018Solution {
 
         //i, j两轮遍历
         for (int i = 0; i < N - 3; i++) {
-            for (int j = i + 1; j < N - 2; j++) {
-
+            if (i > 0 && nums[i] == nums[i-1]) continue;
+            for (int j = N - 1; j > i + 2; j--) {
+                if (j < N -1 && nums[j] == nums[j + 1]) continue;
                 //low, high左右指针，双指针遍历
-                int low = j + 1;
-                int high = N - 1;
+                int low = i + 1;
+                int high = j - 1;
 
                 //target减去i, j 的值
                 int remainTarget = target - nums[i] - nums[j];
@@ -53,9 +54,11 @@ public class Prob0018Solution {
                         list.add(nums[low]);
                         list.add(nums[high]);
 
-                        if (!ansSet.contains(list)){
+
+                        //if (!ansSet.contains(list)){
                             ansSet.add(list);
-                        }
+
+                        //}
 
                         while (low < high && nums[low] == left) low++;
                         while (low < high && nums[high] == right) high--;
