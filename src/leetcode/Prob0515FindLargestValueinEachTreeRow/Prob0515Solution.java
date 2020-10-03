@@ -1,40 +1,53 @@
 package leetcode.Prob0515FindLargestValueinEachTreeRow;
 
-import com.sun.source.tree.Tree;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 
 public class Prob0515Solution {
     public List<Integer> largestValues(TreeNode root) {
-        if (root == null) return null;
-
         List<Integer> ansList = new ArrayList<>();
+        if (root == null) return ansList;
 
-        ansList.add(root.val);
+        Queue<TreeNode> treeNodeQueue = new ArrayDeque<>();
+        treeNodeQueue.offer(root);
+        TreeNode pNode;
 
-        TreeNode rootLeft = root.left;
-        TreeNode rootRight = root.right;
+        while (!treeNodeQueue.isEmpty()) {
+            //每一层的节点的数量，就是queue的数量
+            int levelSize = treeNodeQueue.size();
+            int max = Integer.MIN_VALUE;
 
-        return null;
+            for (int i = 0; i < levelSize; i++) {
+                pNode = treeNodeQueue.poll();
+                max = Math.max(max, pNode.val);
+                if (pNode.left != null) {
+                    treeNodeQueue.offer(pNode.left);
+                }
+                if (pNode.right != null) {
+                    treeNodeQueue.offer(pNode.right);
+                }
+            }
+            ansList.add(max);
+        }
+        return ansList;
     }
-
-
-    public int largerChild(TreeNode root){
-        if (root.left == null && root.right != null) return root.right.val;
-        else if (root.left != null && root.right == null) return root.left.val;
-        else return Math.min(root.left.val, root.right.val);
-    }
-
-
 }
 
 class TreeNode {
     int val;
     TreeNode left;
     TreeNode right;
-    TreeNode() {}
-    TreeNode(int val) { this.val = val; }
+
+    TreeNode() {
+    }
+
+    TreeNode(int val) {
+        this.val = val;
+    }
+
     TreeNode(int val, TreeNode left, TreeNode right) {
         this.val = val;
         this.left = left;
