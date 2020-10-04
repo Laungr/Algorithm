@@ -1,7 +1,7 @@
 package leetcode.Prob0104MaximumDepthOfBinaryTree;
 
 /**
- * 迭代解法
+ * 递归解法
  *
  */
 public class Prob0104Solution {
@@ -16,6 +16,20 @@ public class Prob0104Solution {
         else  return Math.max(maxDepth(p.left, p.right) + 1, maxDepth(q.left, q.right) + 1);
     }
 
+}
+
+/**
+ * 更精简的递归写法 nb！
+ */
+class Prob0104Solution2{
+    public int maxDepth(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        else {
+            return Math.max(maxDepth(root.left), maxDepth(root.right)) + 1;
+        }
+    }
 }
 
 class TreeNode {
