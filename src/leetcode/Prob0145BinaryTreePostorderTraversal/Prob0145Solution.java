@@ -28,31 +28,33 @@ public class Prob0145Solution {
  * 二叉树后序遍历的迭代写法
  */
 class Prob0145Solution2{
-    public List<Integer> postorderTraversal(TreeNode root){
-        List<Integer> result = new ArrayList<>();
-        if (root == null) return result;
+     List<Integer> result = new ArrayList<>();
+     public List<Integer> postorderTraversal(TreeNode root) {
+         if (root == null) return result;
 
-        Stack<TreeNode> treeNodeStack = new Stack<>();
-        TreeNode p ;
-        TreeNode lastVisit = root;
-        treeNodeStack.push(root);
+         Stack<TreeNode> s = new Stack<>();
+         TreeNode p = root;
+         TreeNode lastVisit = root;
 
-        while (!treeNodeStack.isEmpty()){
-            p = treeNodeStack.peek();
-
-            if (p.right != null && p.right != lastVisit) treeNodeStack.push(p.right);
-            if (p.left != null && p.right != lastVisit) treeNodeStack.push(p.left);
-
-            if (p.left == null && p.right == null || p.right == lastVisit){
-                result.add(p.val);
-                p = treeNodeStack.pop();
-                lastVisit = p;
-
-            }
-        }
-        return result;
-    }
-}
+         while (p != null || !s.isEmpty()){
+             while (p != null) {
+                 s.push(p);
+                 p = p.left;
+             }
+             p = s.peek();
+             if (p.right == null || p.right == lastVisit){
+                 result.add(p.val);
+                 lastVisit = p;
+                 s.pop();
+                 p = null;
+             }
+             else{
+                 p = p.right;
+             }
+         }
+         return result;
+     }
+ }
 
 
 
