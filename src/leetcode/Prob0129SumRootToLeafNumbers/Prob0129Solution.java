@@ -60,6 +60,49 @@ public class Prob0129Solution {
     }
 }
 
+class Prob0129Solution2{
+    public int sumNumbers(TreeNode root) {
+        if (root == null) return 0;
+        int result = 0;
+
+        // subSumList 就是每个path的从根到叶的和的集合
+        List<Integer> subSumList = new ArrayList<>();
+        dfs(root, 0, subSumList);
+
+        for (Integer integer : subSumList) {
+            result += integer;
+        }
+        return result;
+
+    }
+
+    /**
+     *
+     * @param root 根节点
+     * @param subSum 每个path的和
+     * @param resultList 所有subSum的集合
+     */
+
+    public void dfs(TreeNode root,int subSum, List<Integer> resultList){
+        if (root == null) return;
+
+        subSum = subSum*10 + root.val;
+        // 如果是叶子节点，那么就把subSum加入resultList
+        // 移除list中的最后一个元素
+        if (root.left == null && root.right == null) {
+            resultList.add(subSum);
+            //加到list之后，对subSum取模
+            subSum /= 10;
+            return;
+        }
+        // 否则就递归到左子树和右子树
+        dfs(root.left, subSum, resultList);
+        dfs(root.right, subSum, resultList);
+        // 对subSum取模
+        subSum /= 10;
+    }
+}
+
 class TreeNode {
     int val;
     TreeNode left;
