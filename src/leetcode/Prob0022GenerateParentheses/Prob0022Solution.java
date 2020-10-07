@@ -5,36 +5,35 @@ import java.util.*;
 
 public class Prob0022Solution {
     public static List<String> generateParenthesis(int n) {
+        Set<String> result = new HashSet<>();
 
-        List<String> ansList = new ArrayList<>();
+        generateParenthesis(result, "", "(", n, 0, 0);
 
-        Set<String> set = recursionGen(n);
-        for (String s : set) {
-            ansList.add(s);
-        }
-        return ansList;
-    }
-    public static Set<String> recursionGen(int n) {
-        Set<String> ansSet = new HashSet<>();
-        if (n == 0) {ansSet.add("\"\""); return ansSet;}
-        if (n == 1) {
-            ansSet.add("()");
-            return ansSet;
-        }
-        else
-        return expand(recursionGen(n - 1));
+        return new ArrayList<>(result);
     }
 
-    public static Set<String> expand(Set<String> set) {
-        Set<String> ansSet = new HashSet<>();
-
-        for (String s : set) {
-            ansSet.add("()" + s);
-            ansSet.add(s + "()");
-            ansSet.add("(" + s + ")");
+    public static void generateParenthesis(Set<String> list, String subList, String subString, int n, int left, int right){
+        if (left == n && right == n){
+            list.add(subList);
         }
-        return ansSet;
+        if (left < right || left > n || right > n){
+            return;
+        }
+
+        subList += subString;
+
+        if ("(".equals(subString)) {
+            left++;
+        } else {
+            right++;
+        }
+
+        generateParenthesis(list, subList, "(", n, left, right);
+        generateParenthesis(list, subList, ")", n, left, right);
+
     }
+
+
 }
 
 class Test{
