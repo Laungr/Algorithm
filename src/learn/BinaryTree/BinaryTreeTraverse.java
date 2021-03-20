@@ -71,7 +71,7 @@ public class BinaryTreeTraverse {
         //一定程度上相当于把前序遍历反过来写
         while (node != null || !treeNodeStack.isEmpty()) {
             //如果左子树不为空，遍历访问左子树，并将node压入栈中
-            if (node != null) {
+            while (node != null) {
                 treeNodeStack.push(node);
                 node = node.left;
             }
@@ -93,7 +93,7 @@ public class BinaryTreeTraverse {
         }
     }
 
-    public void levelTraverse(TreeNode root){
+    public void levelTraverse(TreeNode root) {
         TreeNode node = root;
         Queue<TreeNode> treeNodeQueue = new ArrayDeque<>();
         treeNodeQueue.offer(node);
@@ -102,6 +102,53 @@ public class BinaryTreeTraverse {
         //如果左右子树都有子树，那么依次压入左右子树。
 
         //定义一个队列，将整个二叉树依次压入，然后取出的时候再压入他的左右子树，直到队列为空，就遍历完所有节点了
+        while (!treeNodeQueue.isEmpty()) {
+            node = treeNodeQueue.poll();
+            System.out.println(node.val);
+            if (node.left != null) {
+                treeNodeQueue.offer(node.left);
+            }
+            if (node.right != null) {
+                treeNodeQueue.offer(node.right);
+            }
+        }
+    }
+
+        /**
+         * 二叉树的深度优先遍历DFS
+         * 从根节点出发，沿着左子树方向进行纵向遍历，直到找到叶子节点为止。
+         * 然后回溯到前一个节点，进行右子树节点的遍历，直到遍历完所有可达节点为止。
+         */
+        public void dfsTraverse(TreeNode root){
+            //深度优先遍历使用stack，node为游标节点
+            Stack<TreeNode> treeNodeStack = new Stack<>();
+            TreeNode node = root;
+            treeNodeStack.push(root);
+
+            while (!treeNodeStack.isEmpty()){
+                node = treeNodeStack.pop();
+                System.out.println(node.val);
+                if (node.right != null){
+                    treeNodeStack.push(node.right);
+                }
+                if (node.left != null){
+                    treeNodeStack.push(node.left);
+                }
+            }
+        }
+
+    /**
+     * 二叉树的广度优先遍历BFS
+     * 从根节点出发，在横向遍历二叉树层段节点的基础上纵向遍历二叉树的层次。
+     * dfsTraverse与levelTraverse一样的竟然
+     */
+    public void bfsTraverse(TreeNode root){
+        //深度优先遍历使用queue，node为游标节点
+        Queue<TreeNode> treeNodeQueue = new ArrayDeque<>();
+        TreeNode node = root;
+        treeNodeQueue.offer(root);
+
+        //广度优先遍历用queue
         while (!treeNodeQueue.isEmpty()){
             node = treeNodeQueue.poll();
             System.out.println(node.val);
@@ -111,11 +158,10 @@ public class BinaryTreeTraverse {
             if (node.right != null){
                 treeNodeQueue.offer(node.right);
             }
-
-
         }
-
     }
+
+
 }
 
 

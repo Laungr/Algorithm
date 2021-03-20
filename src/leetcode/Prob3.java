@@ -1,4 +1,9 @@
 package leetcode;
+
+import sun.reflect.generics.tree.Tree;
+
+import java.util.Stack;
+
 /**
  * @author
  *
@@ -24,4 +29,43 @@ package leetcode;
 
 
 public class Prob3 {
+
+
+}
+
+class PreOrderTranverse {
+    TreeNode root;
+
+    public void preOrderTransverse() {
+        Stack<TreeNode> treeNodeStack = new Stack<>();
+        while (root != null || !treeNodeStack.isEmpty()) {
+            if (root != null){
+                System.out.println(root.val);
+            }
+
+            if (root.right != null) {
+                treeNodeStack.push(root.right);
+            }
+
+            if (root.left == null){
+                root = treeNodeStack.pop();
+            }
+            else {
+                root = root.left;
+            }
+
+        }
+    }
+}
+
+class TreeNode{
+    int val;
+
+    TreeNode(int x){
+        this.val = x;
+    }
+
+    TreeNode left;
+
+    TreeNode right;
 }

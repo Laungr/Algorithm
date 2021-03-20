@@ -24,7 +24,9 @@ class Prob0105Solution2{
     }
 
     private TreeNode buildTree(int[] preorder, int preLeft, int preRight, Map<Integer, Integer> inorderMap, int inLeft, int inRight) {
-        if (preLeft > preRight || inLeft > inRight) return null;
+        if (preLeft > preRight || inLeft > inRight) {
+            return null;
+        }
         TreeNode root = new TreeNode(preorder[preLeft]);
 
         int pIndex = inorderMap.get(preorder[preLeft]);

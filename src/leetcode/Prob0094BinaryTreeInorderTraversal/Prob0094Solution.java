@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Stack;
 
 public class Prob0094Solution {
-    List<Integer> ansList;
     public List<Integer> inorderTraversal(TreeNode root) {
 
         List<Integer> ansList = new ArrayList<>();

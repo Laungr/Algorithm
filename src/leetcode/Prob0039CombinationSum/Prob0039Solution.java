@@ -48,11 +48,15 @@ class Prob0039Solution2 {
 
         for (int i = start; i < candidates.length; i++) {
             subList.add(candidates[i]);
+            System.out.println("subList添加了 "+candidates[i]+"    现在是 "+subList.toString());
             if (target == candidates[i]){
                 result.add(new ArrayList<>(subList));
+                System.out.println("有一个满足的是: "+ subList.toString());
             }
             combinationSum(candidates, target - candidates[i], i, result, subList);
+            System.out.print("剪枝了： "+ subList.get(subList.size() - 1));
             subList.remove(subList.size() - 1);
+            System.out.println( "  剪枝后 "+ subList.toString() );
         }
     }
 }
