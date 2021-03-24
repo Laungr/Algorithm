@@ -1,6 +1,5 @@
 package leetcode.Prob0106ConstructBinaryTreefromInorderandPostorderTraversal;
 
-import com.sun.source.tree.Tree;
 
 import java.util.HashMap;
 import java.util.Map;

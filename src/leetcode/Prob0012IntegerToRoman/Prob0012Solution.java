@@ -48,7 +48,9 @@ class Prob0012Solution2{
     public static String intToRoman(int num) {
         int []digitArray = {0, 0, 0, 0, 0, 0, 0, 0};
         String symbolsStr[] = {"", "M", "D", "C", "L", "X", "V", "I"};
-        if (num < 1 || num > 3999) return "";
+        if (num < 1 || num > 3999) {
+            return "";
+        }
         String ans = "";
         int mod = 1000;
         int digitCount = 0;
@@ -61,8 +63,11 @@ class Prob0012Solution2{
         }
 
         for (int i = 0; i < digitArray.length /2 ; i ++){
-            if (digitArray[2*i+1] == 4) ans = ans + symbolsStr[2*i +1] + symbolsStr[2*i -digitArray[2*i]];
-            else ans = ans + symbolsStr[2*i].repeat(digitArray[2*i])+ symbolsStr[2*i+1].repeat(digitArray[2*i+1]);
+            if (digitArray[2*i+1] == 4) {
+                ans = ans + symbolsStr[2*i +1] + symbolsStr[2*i -digitArray[2*i]];
+            } else {
+               // ans = ans + symbolsStr[2*i].repeat(digitArray[2*i])+ symbolsStr[2*i+1].repeat(digitArray[2*i+1]);
+            }
         }
         return ans;
     }
