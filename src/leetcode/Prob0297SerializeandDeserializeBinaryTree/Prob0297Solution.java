@@ -1,5 +1,7 @@
 package leetcode.Prob0297SerializeandDeserializeBinaryTree;
 
+import java.util.ArrayList;
+
 public class Prob0297Solution {
     private final String SEP = ",";
     private final String NULL = "#";
