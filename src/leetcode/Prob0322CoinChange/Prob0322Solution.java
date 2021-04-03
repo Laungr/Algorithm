@@ -38,8 +38,12 @@ import java.util.Arrays;
   */
 class Prob0322Solution2{
     public static int coinChange(int[] coins, int amount) {
-        if (amount < 0) return -1;
-        if (amount == 0) return 0;
+        if (amount < 0) {
+            return -1;
+        }
+        if (amount == 0) {
+            return 0;
+        }
 
         int dp[] = new int[amount+1];
         dp[0] = 0;
@@ -47,7 +51,9 @@ class Prob0322Solution2{
         for (int i = 1; i <= amount; i++) {
             dp[i] = amount + 1;
             for (int coin : coins) {
-                if (i < coin) continue;
+                if (i < coin) {
+                    continue;
+                }
                 dp[i] = Math.min(dp[i], 1 + dp[i - coin]);
             }
         }
@@ -58,6 +64,31 @@ class Prob0322Solution2{
 class Test{
     public static void main(String[] args) {
         int[] coins = {186,419,83,408};
+        int[] coins2 = {1,2,5};
         System.out.println(Prob0322Solution2.coinChange(coins, 6249));
+        Prob0322Solution3 sol = new Prob0322Solution3();
+        System.out.println(sol.coinChange(coins, 6249));
+    }
+}
+
+class Prob0322Solution3{
+    public int coinChange(int[] coins, int amount){
+        int[] dp = new int[amount + 1];
+        for (int i = 1; i < amount + 1; i++) {
+            dp[i] = amount + 1;
+        }
+        dp[0] = 0;
+        for (int i = 1; i < amount + 1; i++) {
+            for(int coin : coins){
+                if (i == coin){
+                    dp[i] = 1;
+                }
+                if (i > coin){
+                    dp[i] = Math.min(dp[i - coin] + 1, dp[i]);
+                }
+            }
+
+        }
+        return dp[amount] > amount ? -1 : dp[amount];
     }
 }
