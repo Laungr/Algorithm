@@ -35,12 +35,36 @@ public class Prob0516Solution {
     }
 }
 
-class Test{
+class Test {
     public static void main(String[] args) {
         Prob0516Solution sol = new Prob0516Solution();
         String s = "abfcfdffcba";
         int i = sol.longestPalindromeSubseq(s);
         System.out.println(i);
 
+    }
+}
+
+/**
+ * 最回文子序列
+ * dp[i][j]表示从 i 到 j 包含的最长回文子序列
+ * dp[i][i] = 1
+ * 从右下角往上填写
+ */
+class Prb0516SOlution2 {
+    public int longestPalindromeSubseq(String s) {
+        int n = s.length();
+        int[][] f = new int[n][n];
+        for (int i = n - 1; i >= 0; i--) {
+            f[i][i] = 1;
+            for (int j = i + 1; j < n; j++) {
+                if (s.charAt(i) == s.charAt(j)) {
+                    f[i][j] = f[i + 1][j - 1] + 2;
+                } else {
+                    f[i][j] = Math.max(f[i + 1][j], f[i][j - 1]);
+                }
+            }
+        }
+        return f[0][n - 1];
     }
 }
