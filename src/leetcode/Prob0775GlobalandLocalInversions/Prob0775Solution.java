@@ -21,16 +21,24 @@ public class Prob0775Solution {
                 }
             }
         }
-//        System.out.println("Global Inversion ==> " + globalInversion);
-//        System.out.println("Local  Inversion ==> " + localInversion);
+        System.out.println("Global Inversion ==> " + globalInversion);
+        System.out.println("Local  Inversion ==> " + localInversion);
         return globalInversion == localInversion;
+    }
+}
+
+class Prob0775Solution2 {
+    public boolean isIdealPermutation(int[] nums) {
+
+
+        return false;
     }
 }
 
 class Test {
     public static void main(String[] args) {
         Prob0775Solution sol = new Prob0775Solution();
-        int[] nums = {1};
+        int[] nums = {0,4,1,2,3};
         System.out.println(sol.isIdealPermutation(nums));
     }
 }
