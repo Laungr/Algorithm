@@ -14,6 +14,10 @@ import java.util.HashSet;
  *
  * @author Okaeri
  */
+
+/**
+ * 之后批注： 时间复杂度和空间复杂度都超了
+ */
 public class Prob0041Solution {
     public int firstMissingPositive(int[] nums) {
         // 通过 HashSet 给数组去重
@@ -73,9 +77,59 @@ public class Prob0041Solution {
     }
 }
 
+/**
+ * 简单解法 2：将所有的数组元素放进 HashSet 中，从 1 ~ n + 1 遍历一次，使用 set.contains() 函数，不包含即求解的值
+ * 空间复杂度为 O(N) 超出要求 ，时间复杂度 O(N) 满足要求
+ */
+class Prob0041Solution2 {
+    public int firstMissingPositive(int[] nums) {
+        HashSet<Integer> set = new HashSet<>();
+        for (int num : nums) {
+            set.add(num);
+        }
+        int result;
+
+        for (result = 1; result <= nums.length; result++) {
+            if (!set.contains(result)) {
+                break;
+            }
+        }
+        return result;
+    }
+}
+
+
+/**
+ * 官方解法，秒啊
+ */
+class Solution {
+    public int firstMissingPositive(int[] nums) {
+        int n = nums.length;
+        // 把数组中的非正数，改变成 n+1
+        for (int i = 0; i < n; ++i) {
+            if (nums[i] <= 0) {
+                nums[i] = n + 1;
+            }
+        }
+        // 数字 n 存在了，就把对应的索引为 n - 1 的位置变成负数
+        for (int i = 0; i < n; ++i) {
+            int num = Math.abs(nums[i]);
+            if (num <= n) {
+                nums[num - 1] = -Math.abs(nums[num - 1]);
+            }
+        }
+        // 最后遍历一次，找到第一个正数，即结果
+        for (int i = 0; i < n; ++i) {
+            if (nums[i] > 0) {
+                return i + 1;
+            }
+        }
+        return n + 1;
+    }
+}
 class Test {
     public static void main(String[] args) {
-        Prob0041Solution sol = new Prob0041Solution();
+        Prob0041Solution2 sol = new Prob0041Solution2();
         int[] nums = {1, 2, 2, 1, 3, 1, 0, 4, 0};
         int i = sol.firstMissingPositive(nums);
         System.out.println(i);
