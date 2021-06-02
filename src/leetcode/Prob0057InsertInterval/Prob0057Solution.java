@@ -2,7 +2,6 @@ package leetcode.Prob0057InsertInterval;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -65,11 +64,42 @@ public class Prob0057Solution {
     }
 }
 
+class Prob0057Solution2 {
+    public int[][] insert(int[][] intervals, int[] newInterval) {
+        int left = newInterval[0];
+        int right = newInterval[1];
+        boolean placed = false;
+        int[][] result = new int[intervals.length + 1][2];
+        int index = -1;
+        for (int[] interval : intervals) {
+            // 在插入区间的左侧且无交集
+            if (left > interval[1]) {
+                result[++index] = interval;
+            } else if (interval[0] > right) {
+                // 在插入区间的右侧且无交集
+                if (!placed) {
+                    result[++index] = new int[]{left, right};
+                    placed = true;
+                }
+                result[++index] = interval;
+            } else {
+                // 与插入区间有交集，计算它们的并集
+                left = Math.min(left, interval[0]);
+                right = Math.max(right, interval[1]);
+            }
+        }
+        if (!placed) {
+            result[++index] = new int[]{left, right};
+        }
+        return Arrays.copyOf(result, index + 1);
+    }
+}
+
 class Test {
     public static void main(String[] args) {
-        Prob0057Solution sol = new Prob0057Solution();
+        Prob0057Solution2 sol = new Prob0057Solution2();
         int[][] intervals = {{1, 3}, {6, 9}};
-        int[] newInterval = {2, 5};
+        int[] newInterval = {0, 10};
         int[][] insert = sol.insert(intervals, newInterval);
         for (int[] ints : insert) {
             System.out.println(Arrays.toString(ints));
