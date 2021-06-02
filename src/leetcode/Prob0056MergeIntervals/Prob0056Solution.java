@@ -71,7 +71,7 @@ public class Prob0056Solution {
 
 class Prob0056Solution2 {
     public int[][] merge(int[][] intervals) {
-        // 二维数组排序，排序的 compactor 是第一轮元素的大小
+        // 二维数组排序，排序的 compactor 是第一列元素的大小
         Arrays.sort(intervals, new Comparator<int[]>() {
             @Override
             public int compare(int[] o1, int[] o2) {
@@ -80,25 +80,65 @@ class Prob0056Solution2 {
         });
 
         List<int[]> list = new ArrayList<>();
-        for (int[] interval : intervals) {
-            int left = interval[0];
-            int right = interval[1];
-            if (list.size() == 0 || list.get(list.size() - 1)[1] < left) {
-                list.add(new int[]{left, right});
+        // 双指针，左指针小的情况下，仅移动右指针，右指针取较大值；左指针变大的情况下，将前一个闭区间加入列表,加入之后更新左右指针
+        int left = intervals[0][0];
+        int right = intervals[0][1];
+
+        for (int i = 1; i < intervals.length; i++) {
+            // 如果可以 merge，right 往右移
+            if (right >= intervals[i][0]) {
+                right = Math.max(intervals[i][1], right);
             } else {
-                list.get(list.size() - 1)[1] = Math.max(list.get(list.size() - 1)[1], right);
+                list.add(new int[]{left, right});
+                left = intervals[i][0];
+                right = intervals[i][1];
             }
         }
-        return list.toArray(new int[list.size()][]);
+        list.add(new int[]{left, right});
+        return list.toArray(new int[list.size()][2]);
+    }
+}
+
+
+/**
+ * 不借助 List
+ */
+class Prob0056Solution3 {
+    public int[][] merge(int[][] intervals) {
+        // 二维数组排序，排序的 compactor 是第一列元素的大小
+        Arrays.sort(intervals, new Comparator<int[]>() {
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                return o1[0] - o2[0];
+            }
+        });
+        int[][] result = new int[intervals.length][2];
+        // index 是当前要加入进 result 的索引
+        int index = -1;
+        int left = intervals[0][0];
+        int right = intervals[0][1];
+        for (int i = 1; i < intervals.length; i++) {
+            // 如果可以 merge，right 往右移
+            if (right >= intervals[i][0]) {
+                right = Math.max(intervals[i][1], right);
+            } else {
+                result[++index] = new int[]{left, right};
+                left = intervals[i][0];
+                right = intervals[i][1];
+            }
+        }
+        // 循环完毕后，把最后一组加入数组中
+        result[++index] = new int[]{left, right};
+        return Arrays.copyOf(result, index + 1);
     }
 }
 
 class Test {
     public static void main(String[] args) {
-        Prob0056Solution2 sol = new Prob0056Solution2();
+        Prob0056Solution3 sol = new Prob0056Solution3();
         int[][] intervals = {{1, 3}, {2, 6}, {8, 10}, {15, 18}};
-        int[][] intervals2 = {{1, 4}, {2, 3}};
-        int[][] merge = sol.merge(intervals2);
+        int[][] intervals2 = {{2, 3}, {4, 5}, {6, 7}, {8, 9}, {1, 10}};
+        int[][] merge = sol.merge(intervals);
 
         for (int[] ints : merge) {
             System.out.println(Arrays.toString(ints));
