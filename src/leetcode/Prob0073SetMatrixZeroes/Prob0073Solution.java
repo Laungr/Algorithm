@@ -1,4 +1,4 @@
-package leetcode.Prob0072SetMatrixZeroes;
+package leetcode.Prob0073SetMatrixZeroes;
 
 import java.util.Arrays;
 
@@ -9,7 +9,7 @@ import java.util.Arrays;
  *
  * @author Okaeri
  */
-public class Prob0072Solution {
+public class Prob0073Solution {
     public void setZeros(int[][] matrix) {
         int m = matrix.length;
         int n = matrix[0].length;
@@ -42,7 +42,7 @@ public class Prob0072Solution {
 
 class Test {
     public static void main(String[] args) {
-        Prob0072Solution sol = new Prob0072Solution();
+        Prob0073Solution sol = new Prob0073Solution();
         int[][] matrix = {{0, 1, 2, 0}, {3, 4, 5, 2}, {1, 3, 1, 5}};
         sol.setZeros(matrix);
         for (int[] ints : matrix) {

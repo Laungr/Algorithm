@@ -1,4 +1,4 @@
-package leetcode.Prob0073Searchina2DMatrix;
+package leetcode.Prob0074Searchina2DMatrix;
 
 /**
  * 在一个二维矩阵中找一个元素，能找到返回 true，找不到返回 false
@@ -7,25 +7,22 @@ package leetcode.Prob0073Searchina2DMatrix;
  *
  * @author Okaeri
  */
-public class Prob0073Solution {
+public class Prob0074Solution {
     public boolean searchMatrix(int[][] matrix, int target) {
         int[] numsAtFirstCol = new int[matrix.length];
         // 把第一列放进一个数组中
         for (int i = 0; i < matrix.length; i++) {
             numsAtFirstCol[i] = matrix[i][0];
         }
-        // 查出 target 应该插入在第几行
-        int targetAtRow = searchInsert(numsAtFirstCol, target);
-        //考虑到 searchInsert 函数除了返回插入位置，也可以返回查找位置，所以首先验证已经找到了 target，否则就表示 matrix[targetAtRow][0] > target 的
-        if (matrix[targetAtRow][0] == target) {
+        // 如果在第一列，直接返回
+        if (binarySearch(numsAtFirstCol, target)) {
             return true;
-        } else {
-            // 除去 matrix[targetAtRow][0] == target 的情况，其他的是 target 应该插入上一行，因此targetAtRow--
-            targetAtRow -= 1;
-            // 第 -1 行会导致数组索引越界，进行判断
-            if (targetAtRow < 0) {
-                return false;
-            }
+        }
+        // 查出 target 应该插入在第几行
+        int targetAtRow = searchInsert(numsAtFirstCol, target) - 1;
+        // 查出 targetAtRow 这一行是否存在 target
+        if (targetAtRow < 0) {
+            return false;
         }
         return binarySearch(matrix[targetAtRow], target);
     }
@@ -72,7 +69,7 @@ public class Prob0073Solution {
 
 class Test {
     public static void main(String[] args) {
-        Prob0073Solution sol = new Prob0073Solution();
+        Prob0074Solution sol = new Prob0074Solution();
         int[][] matrix = {{1}, {3}, {5}};
         int target = 3;
         boolean b = sol.searchMatrix(matrix, target);
