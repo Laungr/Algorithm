@@ -6,6 +6,8 @@ import java.util.HashMap;
  * 题目描述：
  * 给你一个字符串 s 、一个字符串 t 。返回 s 中涵盖 t 所有字符的最小子串。如果 s 中不存在涵盖 t 所有字符的子串，则返回空字符串 "" 。
  * 1 <= s.length, t.length <= 10^5
+ *
+ * @author Okaeri
  */
 public class Prob0076Solution {
     public String minWindow(String s, String t) {
@@ -26,6 +28,7 @@ public class Prob0076Solution {
         String result = "";
 
         while (right < s.length()) {
+            // 取出 charAtRight，然后指针右移
             char charAtRight = sourceCharArray[right++];
             //如果字符是 target 中需要的，把它加进 windowMap中
             if (targetMap.containsKey(charAtRight)) {
@@ -64,6 +67,5 @@ class Test {
         String s = "A";
         String t = "AB";
         System.out.println(sol.minWindow(s, t));
-
     }
 }
