@@ -1,50 +1,64 @@
 package leetcode.Prob0018FourSum;
 
-import leetcode.Prob0015ThreeSum.Prob0015Solution;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-import java.util.*;
+/**
+ * 给出一个数组，在数组中找出 4 个数字，四数之和等于 target。
+ * 四数的索引分别为i, j, k, l;严格存在 i < k < l < j;
+ * 因此 i 从左往右遍历， j 从右往左遍历，k 从 i + 1 遍历，l 从 j - 1 遍历，k 和 l 用用双指针。
+ * 要去除重复元素。
+ *
+ * @author Okaeri
+ */
 
 public class Prob0018Solution {
     public static List<List<Integer>> fourSum(int[] nums, int target) {
         Arrays.sort(nums);
-        List<List<Integer>> ansSet = new ArrayList<>();
-
-        //N为数组的长度
-        int N = nums.length;
+        List<List<Integer>> ansSet = new ArrayList<>(nums.length);
+        //len为数组的长度
+        int len = nums.length;
 
         //如果数组的长度小于4，返回空的Set
-        if (N < 4) {
+        if (len < 4) {
             return ansSet;
         }
-
         Arrays.sort(nums);
-
         //i, j两轮遍历
-        for (int i = 0; i < N - 3; i++) {
-            if (i > 0 && nums[i] == nums[i-1]) continue;
-            for (int j = N - 1; j > i + 2; j--) {
-                if (j < N -1 && nums[j] == nums[j + 1]) continue;
+        for (int i = 0; i < len - 3; i++) {
+            //排序之后，排序掉重复的元素
+            if (i > 0 && nums[i] == nums[i - 1]) {
+                continue;
+            }
+            for (int j = len - 1; j > i + 2; j--) {
+                //排序之后，排序掉重复的元素
+                if (j < len - 1 && nums[j] == nums[j + 1]) {
+                    continue;
+                }
                 //low, high左右指针，双指针遍历
                 int low = i + 1;
                 int high = j - 1;
-
                 //target减去i, j 的值
                 int remainTarget = target - nums[i] - nums[j];
-
                 while (low < high) {
                     //取值，
                     int left = nums[low];
                     int right = nums[high];
-                    //双指针取值的和sum
-                    int sum = left + right;
-
+                    // 双指针取值的和sum
+                    int sum = nums[low] + nums[high];
                     //sum与remainTarget比较
                     if (sum < remainTarget) {
-                        while (low < high && nums[low] == left) low++;
+                        // 剔除重复元素
+                        while (low < high && nums[low] == left) {
+                            low++;
+                        }
                     }
-
                     if (sum > remainTarget) {
-                        while (low < high && nums[high] == right) high--;
+                        // 剔除重复元素
+                        while (low < high && nums[high] == right) {
+                            high--;
+                        }
                     }
 
                     if (sum == remainTarget) {
@@ -53,15 +67,13 @@ public class Prob0018Solution {
                         list.add(nums[j]);
                         list.add(nums[low]);
                         list.add(nums[high]);
-
-
-                        //if (!ansSet.contains(list)){
-                            ansSet.add(list);
-
-                        //}
-
-                        while (low < high && nums[low] == left) low++;
-                        while (low < high && nums[high] == right) high--;
+                        ansSet.add(list);
+                        while (low < high && nums[low] == left) {
+                            low++;
+                        }
+                        while (low < high && nums[high] == right) {
+                            high--;
+                        }
                     }
                 }
             }
