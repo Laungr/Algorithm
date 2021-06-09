@@ -1,4 +1,4 @@
-package interview.pdd;
+package interview.pdd.Prob001;
 
 import java.util.ArrayList;
 import java.util.Comparator;
