@@ -1,17 +1,17 @@
-package learn.SortingAlgorithm.quickSort;
+package leetcode.Prob0912SortanArray;
 
-import java.util.Arrays;
 import java.util.Random;
 
 /**
- * 快速排序 递归
+ * 快速排序
  *
  * @author Okaeri
  */
-public class QuickSort {
-    public void quickSort(int[] arr) {
-        // Arrays.sort(arr);
-        quickSort(arr, 0, arr.length - 1);
+public class Prob0912Solution {
+    public int[] sortArray(int[] nums) {
+        //Arrays.sort(arr);
+        quickSort(nums, 0, nums.length - 1);
+        return nums;
     }
 
     private void quickSort(int[] arr, int lo, int hi) {
