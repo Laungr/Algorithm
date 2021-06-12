@@ -3,7 +3,9 @@ package leetcode.Prob0451SortCharactersByFrequency;
 import java.util.*;
 
 /**
+ * 给出一个字符串，按照每个字符出现的字数的顺序排序。
  *
+ * @author Okaeri
  */
 public class Prob00451Solution {
     public String frequencySort(String s) {
