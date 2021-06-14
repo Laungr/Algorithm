@@ -102,6 +102,9 @@ class DfsSolution {
 
     public List<String> letterCombinations(String digits) {
         List<String> res = new ArrayList<>();
+        if ("".equals(digits)){
+            return res;
+        }
         dfs(res, new StringBuilder(), digits, 0);
         return res;
     }
