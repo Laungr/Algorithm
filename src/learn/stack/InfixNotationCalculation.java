@@ -10,7 +10,7 @@ import java.util.HashMap;
  * @author Okaeri
  */
 public class InfixNotationCalculation {
-    public int toPolishNotation(String s) {
+    public int infixNotationCalculation(String s) {
         // 维护一个运算符优先级的 map，方便查询
         HashMap<Character, Integer> priorityMap = new HashMap<>(16);
         priorityMap.put('+', 1);
@@ -113,7 +113,7 @@ class Test {
     public static void main(String[] args) {
         InfixNotationCalculation sol = new InfixNotationCalculation();
         String s = " 3/2 ";
-        int i = sol.toPolishNotation(s);
+        int i = sol.infixNotationCalculation(s);
         System.out.println(i);
     }
 }
