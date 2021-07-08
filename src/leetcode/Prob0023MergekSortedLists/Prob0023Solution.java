@@ -1,15 +1,22 @@
 package leetcode.Prob0023MergekSortedLists;
 
+import java.util.Comparator;
+import java.util.PriorityQueue;
+
+/**
+ * 原解法是采用递归的方法，将链表两两 merge，最终达到合并所有
+ *
+ * @author Okaeri
+ */
 public class Prob0023Solution {
     public ListNode mergeKLists(ListNode[] lists) {
         return merge(lists, 0, lists.length - 1);
     }
 
     /**
-     *
      * @param lists 输入的链表数组，包含了多个链表
-     * @param l 左边界
-     * @param r 右边界
+     * @param l     左边界
+     * @param r     右边界
      * @return 返回合并后的链表头
      */
 
@@ -52,6 +59,36 @@ public class Prob0023Solution {
     }
 }
 
+/**
+ * 用优先队列实现，与Prob0378类似
+ */
+class Prob0023Solution2 {
+    public ListNode mergeKLists(ListNode[] lists) {
+        PriorityQueue<ListNode> queue = new PriorityQueue<>((o1, o2) -> {
+            if (o1 == null) {
+                return -1;
+            } else if (o2 == null) {
+                return 1;
+            }
+            return o1.val - o2.val;
+        });
+        for (ListNode list : lists) {
+            if (list != null) {
+                queue.offer(list);
+            }
+        }
+        ListNode dummyNode = new ListNode(-1);
+        ListNode cursorNode = dummyNode;
+        while (!queue.isEmpty()) {
+            ListNode poll = queue.poll();
+            cursorNode = cursorNode.next = poll;
+            if (poll.next != null){
+                queue.offer(poll.next);
+            }
+        }
+        return dummyNode.next;
+    }
+}
 
 class ListNode {
     int val;
