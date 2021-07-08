@@ -3,6 +3,7 @@ package leetcode.Prob0028ImplementstrStr;
 import java.util.Arrays;
 
 /**
+ * KMP 算法实现
  * 给你两个字符串 haystack 和 needle ，请你在 haystack 字符串中找出 needle 字符串出现的第一个位置（下标从 0 开始）。
  * 如果不存在，则返回  -1 。
  *
@@ -56,13 +57,76 @@ public class Prob0028Solution {
     }
 }
 
+/**
+ * 暴力解法
+ */
+class Prob0028Solution2 {
+    public int strStr(String haystack, String needle) {
+        int m = haystack.length();
+        int n = needle.length();
+        if (n == 0) {
+            return 0;
+        }
+        int offset = 0;
+        for (int i = 0; i <= m - n; i++) {
+            if (haystack.charAt(i) == needle.charAt(offset)) {
+                offset++;
+                while (offset < n) {
+                    if (haystack.charAt(i + offset) == needle.charAt(offset)) {
+                        offset++;
+                    } else {
+                        offset = 0;
+                        break;
+                    }
+                }
+                if (offset == n) {
+                    return i;
+                }
+            } else {
+                offset = 0;
+            }
+        }
+        return -1;
+    }
+}
+
+
+/**
+ * 这个是自己之前做的解法，确实是简单题看来
+ */
+class Solution3 {
+    public int strStr(String haystack, String needle) {
+        if ("".equals(needle)) {
+            return 0;
+        }
+        int hLen = haystack.length();
+        int nLen = needle.length();
+        for (int i = 0; i <= hLen - nLen; i++) {
+            char c = haystack.charAt(i);
+            if (c != needle.charAt(0)) {
+                continue;
+            }
+            String s = haystack.substring(i, i + nLen);
+            //System.out.println(s);
+            if (needle.equals(s)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+}
+
 class Test {
     public static void main(String[] args) {
         String haystack = "aabaaabaaac";
         String needle = "aabaaac";
+        // 测试 1
         Prob0028Solution sol = new Prob0028Solution();
         int i = sol.strStr(haystack, needle);
         System.out.println(i);
+        // 测试 2
+        Prob0028Solution2 sol2 = new Prob0028Solution2();
+        System.out.println(sol2.strStr(haystack, needle));
 
     }
 }
