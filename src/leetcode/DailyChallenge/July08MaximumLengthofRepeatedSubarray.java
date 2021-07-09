@@ -57,6 +57,51 @@ class ProbJuly08Solution2 {
     }
 }
 
+/**
+ * 滑动窗口解法
+ */
+class ProbJuly08Solution3 {
+    public int findLength(int[] nums1, int[] nums2) {
+        int m = nums1.length;
+        int n = nums2.length;
+        int res = 0;
+        for (int i = 0; i < m; i++) {
+            int len = Math.min(n, m - i);
+            int maxLen = maxLength(nums1, nums2, i, 0, len);
+            res = Math.max(res, maxLen);
+        }
+
+        for (int i = 0; i < n; i++) {
+            int len = Math.min(m, n - i);
+            int maxLen = maxLength(nums2, nums1, i, 0, len);
+            res = Math.max(res, maxLen);
+        }
+        return res;
+    }
+
+    /**
+     * 给出两个数组 A 和 B，A 从 addA 索引起始，B 从 addB 索引起始，找出两个数组中重复元素的长度
+     * @param A 输入数组 A
+     * @param B 输入数组 A
+     * @param addA 数组 A 索引起始
+     * @param addB 数组 A 索引起始
+     * @param len (A.length - addA), (B.length - addB) 中的较小值
+     * @return 重复元素的最长长度
+     */
+    public int maxLength(int[] A, int[] B, int addA, int addB, int len) {
+        int ret = 0, offset = 0;
+        for (int i = 0; i < len; i++) {
+            if (A[addA + i] == B[addB + i]) {
+                offset++;
+            } else {
+                offset = 0;
+            }
+            ret = Math.max(ret, offset);
+        }
+        return ret;
+    }
+}
+
 class July08Test {
     public static void main(String[] args) {
         July08MaximumLengthofRepeatedSubarray sol = new July08MaximumLengthofRepeatedSubarray();
